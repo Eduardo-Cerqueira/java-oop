@@ -75,17 +75,12 @@ public class App {
 
     }
 
-    private static void afficherContact() {
-        Scanner sc;
+    private static void afficherContact(){
         try {
-            sc = new Scanner(new File("contacts.csv"));
-            sc.useDelimiter(";");   //sets the delimiter pattern  
+            Scanner sc = new Scanner(new File("contacts.csv"));
             while (sc.hasNext())  //returns a boolean value  
-            {
-                System.out.print(sc.next()); //find and returns the next complete token from this scanner  
-            }
-        sc.close();
-        } catch (FileNotFoundException e) {
+                System.out.println(sc.next().replaceAll(";"," | "));
+            } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
     }
