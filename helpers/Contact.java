@@ -1,4 +1,4 @@
-package model;
+package helpers;
 
 import java.io.FileWriter;
 import java.io.IOException;
