@@ -1,9 +1,13 @@
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
-import helpers.Contact;
+import comparateur.ContactDateComparateur;
+import model.Contact;
 
 public class App {
     private static Scanner scan = new Scanner(System.in);
@@ -19,6 +23,21 @@ public class App {
                 case "2":
                     listerContact();
                     break;
+                case "3":
+                    modifierContact();
+                    break;
+                case "4":
+                    supprimerContact();
+                    break;
+                case "5":
+                    trierContact();
+                    break;
+                case "6":
+                    trierContactParDate();
+                    break;
+                case "7":
+                    rechercherContact();
+                    break;
                 case "q":
                     scan.close();
                     return;
@@ -27,6 +46,140 @@ public class App {
                     break;
             }
             afficherMenu();
+        }
+    }
+
+    private static void supprimerContact() {
+        try {
+            listerContact();
+            List<Contact> liste = Contact.lister();
+            System.out.println("Mail du contact a supprimer ?");
+            String mail = scan.nextLine();
+            Contact contactASuppr = null;
+            for (Contact c : liste) {
+                if (c.getMail().equals(mail)) {
+                    contactASuppr = c;
+                }
+            }
+            if (contactASuppr != null) {
+                liste.remove(contactASuppr);
+                Contact.enregistrerTous(liste);
+                System.out.println("Contact supprimé");
+            } else {
+                System.out.println("Pas de contact a supprimer");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void modifierContact() {
+        try {
+            listerContact();
+            List<Contact> liste = Contact.lister();
+            System.out.println("Mail du contact a modifié ?");
+            String mail = scan.nextLine();
+            Contact contactAModif = null;
+            for (Contact c : liste) {
+                if (c.getMail().equals(mail)) {
+                    contactAModif = c;
+                }
+            }
+            if (contactAModif != null) {
+                System.out.println("Saisir le nom:");
+                contactAModif.setNom(scan.nextLine());
+                System.out.println("Saisir le prénom:");
+                contactAModif.setPrenom(scan.nextLine());
+
+                do {
+                    try {
+                        System.out.println("Saisir le téléphone:");
+                        contactAModif.setNumero(scan.nextLine());
+                        break;
+                    } catch (ParseException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } while (true);
+
+                do {
+                    try {
+                        System.out.println("Saisir le mail:");
+                        contactAModif.setMail(scan.nextLine());
+                        break;
+                    } catch (ParseException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } while (true);
+
+                do {
+                    try {
+                        System.out.println("Saisir la date de naissance:");
+                        contactAModif.setDateNaissance(scan.nextLine());
+                        break;
+                    } catch (ParseException e) {
+                        System.out.println("Error, try again!");
+                    }
+                } while (true);
+                Contact.enregistrerTous(liste);
+                System.out.println("Contact modifié");
+            } else {
+                System.out.println("Pas de contact a modifier");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void rechercherContact() {
+        try {
+            Stream<Contact> liste = Contact.lister().stream();
+            System.out.println("Saisir recherche ?");
+            String saisie = scan.nextLine();
+
+            // 1ere technique
+            /*
+             * Stream<Contact> resultat = liste.filter(new Predicate<Contact>() {
+             * 
+             * @Override
+             * public boolean test(Contact t) {
+             * return t.getNom().contains(saisie);
+             * }
+             * });
+             */
+
+            // 2eme technique
+            Stream<Contact> resultat2 = liste.filter(t -> t.getNom().contains(saisie));
+
+            resultat2.forEach(c -> System.out.println(c.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void trierContactParDate() {
+        try {
+            ArrayList<Contact> liste;
+            liste = Contact.lister();
+            Collections.sort(liste, new ContactDateComparateur());
+
+            for (Contact c : liste) {
+                System.out.println(c.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void trierContact() {
+        try {
+            ArrayList<Contact> liste = Contact.lister();
+            Collections.sort(liste, null);
+
+            for (Contact c : liste) {
+                System.out.println(c.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -82,7 +235,12 @@ public class App {
             }
         } while (true);
 
-        c.enregistrer();
+        try {
+            c.enregistrer();
+            System.out.println("Contact enregistré.");
+        } catch (IOException e) {
+            System.out.println("Erreur à l'enregistrement");
+        }
 
     }
 
@@ -96,7 +254,15 @@ public class App {
          */
         // 2
         ArrayList<String> menus = new ArrayList<>();
-        menus.add("\n[-- MENU --]\n| 1- Ajouter un contact\n| 2- Lister les contacts\n| q- Quitter\n");
+        menus.add("-- MENU --");
+        menus.add("1- Ajouter un contact");
+        menus.add("2- Lister les contacts");
+        menus.add("3- Modifier contact");
+        menus.add("4- Supprimer contact");
+        menus.add("5- Trier les contacts");
+        menus.add("6- Trier les contacts par date");
+        menus.add("7- Rechercher les contacts sur nom");
+        menus.add("q- Quitter");
         for (String s : menus) {
             System.out.println(s);
         }
