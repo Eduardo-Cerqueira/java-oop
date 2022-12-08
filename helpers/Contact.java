@@ -1,14 +1,19 @@
 package helpers;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Contact {
+    public static final String SEPARATEUR = ";";
+
     private String nom;
     private String prenom;
     private String numero;
@@ -78,18 +83,44 @@ public class Contact {
         }
     }
 
+    public static ArrayList<Contact> lister() throws IOException {
+        ArrayList<Contact> list = new ArrayList<>();
+        BufferedReader buf = new BufferedReader(new FileReader("contacts.csv"));
+        try {
+            String ligne = buf.readLine();
+            while (ligne != null) {
+                String[] tab = ligne.split(SEPARATEUR);
+                Contact c = new Contact();
+                c.setNom(tab[0]);
+                c.setPrenom(tab[1]);
+                c.setMail(tab[2]);
+                c.setNumero(tab[3]);
+                c.setDateNaissance(tab[4]);
+                list.add(c);
+                ligne = buf.readLine();
+            }
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Erreur de lecture sur le fichier");
+        } finally {
+            buf.close();
+        }
+        return list;
+    }
+
     @Override
     public String toString() {
         // return this.getNom() + ";" + this.getPrenom();*
         StringBuilder build = new StringBuilder();
         build.append(getNom());
-        build.append(";");
+        build.append(SEPARATEUR);
         build.append(getPrenom());
-        build.append(";");
+        build.append(SEPARATEUR);
         build.append(getMail());
-        build.append(";");
+        build.append(SEPARATEUR);
         build.append(getNumero());
-        build.append(";");
+        build.append(SEPARATEUR);
         SimpleDateFormat dtf = new SimpleDateFormat("dd/MM/yyyy");
         build.append(dtf.format(getDateNaissance()));
         return build.toString();

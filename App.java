@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,9 +17,7 @@ public class App {
                     ajouterContact();
                     break;
                 case "2":
-                    break;
-                case "3":
-                    afficherContact();
+                    listerContact();
                     break;
                 case "q":
                     scan.close();
@@ -31,6 +28,20 @@ public class App {
             }
             afficherMenu();
         }
+    }
+
+    private static void listerContact() {
+        // Contact c = new Contact();
+        try {
+            ArrayList<Contact> liste = Contact.lister();
+
+            for (Contact contact : liste) {
+                System.out.println(contact.getPrenom() + " " + contact.getNom());
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur avec le fichier");
+        }
+
     }
 
     private static void ajouterContact() {
@@ -75,16 +86,6 @@ public class App {
 
     }
 
-    private static void afficherContact(){
-        try {
-            Scanner sc = new Scanner(new File("contacts.csv"));
-            while (sc.hasNext())  //returns a boolean value  
-                System.out.println(sc.next().replaceAll(";"," | "));
-            } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
-    }
-
     public static void afficherMenu() {
         // 1
         /*
@@ -95,11 +96,7 @@ public class App {
          */
         // 2
         ArrayList<String> menus = new ArrayList<>();
-        menus.add("\n[-- MENU --]");
-        menus.add("1- Ajouter un contact");
-        menus.add("2- Modifier un contact");
-        menus.add("3- Lister les contacts");
-        menus.add("q- Quitter\n");
+        menus.add("\n[-- MENU --]\n| 1- Ajouter un contact\n| 2- Lister les contacts\n| q- Quitter\n");
         for (String s : menus) {
             System.out.println(s);
         }
