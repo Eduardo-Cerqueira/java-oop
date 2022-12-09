@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -179,23 +178,16 @@ public class manageContacts {
             error.printStackTrace();
         }
     }
-    
+    //Collection compare to contact : https://stackoverflow.com/questions/26321128/arrays-sort-error-in-main
     //More info : https://www.geeksforgeeks.org/collections-sort-java-examples/
     public static void sortContacts() {
+        ArrayList<contact> list;
         try {
-            ArrayList<contact> list = allContacts();
+            list = allContacts();
             Collections.sort(list, null);
             for (contact c : list) {
                 System.out.println(c.toString());
             }
-            /* 
-            Collections.sort(list, null);
-
-            Arrays.sort(strarray, Collections.sort(null);));
-            Arrays.toString(strarray)
-            for (contact c : list) {
-                System.out.println(c.toString());
-            }*/
         } catch (IOException error) {
             error.printStackTrace();
         } 
@@ -214,5 +206,22 @@ public class manageContacts {
             } catch (IOException error) {
             error.printStackTrace();
         }
+    }
+
+    // More info here : https://www.programiz.com/java-programming/examples/array-contains-value
+    public static void findContact() throws IOException {
+
+        ArrayList<contact> list;
+        list = allContacts();
+        System.out.println("Saisir le nom :");
+        String nameToFind = scan.nextLine();
+    
+        for (contact c : list) {
+            if (c.getSurname().equals(nameToFind)) {
+                System.out.println("\n" + c + "\n");
+                break;
+            }
+        }
+        System.out.println("Name not found ...");
     }
 }

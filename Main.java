@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import helpers.manageContacts;
@@ -33,6 +32,7 @@ public class Main {
                     manageContacts.sortByDate();
                     break;
                 case "7":
+                    manageContacts.findContact();
                     break;
                 case "a":
                     scan.close();

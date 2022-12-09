@@ -113,7 +113,7 @@ public class contact implements Comparable<contact> {
             pw.close();
         }
     }
-    @Override
+
     public int compareTo(contact c) {
         if (this.getName().equals(c.getName())) {
             return this.getSurname().compareTo(c.getSurname());
