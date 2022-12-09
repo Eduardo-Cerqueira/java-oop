@@ -1,100 +1,43 @@
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
+import helpers.manageContacts;
 
 public class Main {
     // Scanner init
     private static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) throws Exception {
-        afficherMenu("menu.txt");
-
-        /*while (true) {
-            String choix = scan.nextLine();
-            switch (choix) {
+        //afficherMenuTxt("menu.txt");
+        afficherMenu();
+        
+        while (true) {
+            String choise = scan.nextLine();
+            switch (choise) {
                 case "1":
-                    ajouterContact();
+                    manageContacts.addContact();
                     break;
                 case "2":
-                    listerContact();
+                    manageContacts.showAllContacts();
                     break;
                 case "3":
-                    modifierContact();
+                    manageContacts.modifyContact();
                     break;
                 case "4":
-                    supprimerContact();
-                    break;
-                case "5":
-                    trierContact();
-                    break;
-                case "6":
-                    trierContactParDate();
-                    break;
-                case "7":
-                    rechercherContact();
-                    break;
-                case "q":
+                    manageContacts.deleteContact();
+                case "a":
                     scan.close();
                     return;
                 default:
-                    System.out.println("Boulet!!!!");
+                    System.out.println("Are you sure your answer is correct ?");
                     break;
             }
-            afficherMenu("menu.txt");
-        }*/
-    }
-    // Name
-    private String name;
-    
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    // Surname (Family name)
-    private String surname;
-
-    public String getSurname() {
-        return surname;
-    }
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-     // Phone Number
-    private String phone_num;
-    
-    public String getPhone_num() {
-        return phone_num;
-    }
-    public void setPhone_num(String phone_num) {
-        this.phone_num = phone_num;
-    }
-
-    // Email
-    private String email;
-
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    // Birth date
-    private Date birth_date;
-
-    public Date getBirth_date() {
-        return birth_date;
-    }
-    public void setBirth_date(Date birth_date) {
-        this.birth_date = birth_date;
+            //afficherMenuTxt("menu.txt");
+            afficherMenu();
+        }
     }
 
     /*
+    // Custom text version
     public static void afficherMenuTxt(String menufile) {
         try { 
             File file = new File(menufile);
@@ -112,6 +55,7 @@ public class Main {
     }
     */
 
+    // Standard array version
     public static void afficherMenu() {
         ArrayList<String> menus = new ArrayList<>();
         menus.add("[--------------- MENU ---------------]");
@@ -124,7 +68,7 @@ public class Main {
         menus.add("| 6: Trier les contacts par date     |");
         menus.add("| 7: Rechercher les contacts sur nom |");
         menus.add("|                                    |");
-        menus.add("|          Press q to leave          |");
+        menus.add("|          Press a to leave          |");
         menus.add("[------------------------------------]");
         for (String s : menus) {
             System.out.println(s);

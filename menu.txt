@@ -8,5 +8,5 @@
 | 6: Trier les contacts par date     |
 | 7: Rechercher les contacts sur nom |
 |                                    |
-|          Press q to leave          |
+|          Press a to leave          |
 [------------------------------------]

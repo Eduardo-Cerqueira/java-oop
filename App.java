@@ -186,9 +186,9 @@ public class App {
     private static void listerContact() {
         // Contact c = new Contact();
         try {
-            ArrayList<Contact> liste = Contact.lister();
+            ArrayList<Contact> list = Contact.lister();
 
-            for (Contact contact : liste) {
+            for (Contact contact : list) {
                 System.out.println(contact.getPrenom() + " " + contact.getNom());
             }
         } catch (IOException e) {
