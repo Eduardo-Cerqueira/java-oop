@@ -1,0 +1,12 @@
+[--------------- MENU ---------------]
+|                                    |
+| 1: Ajouter un contact              |
+| 2: Lister les contacts             |
+| 3: Modifier contact                |
+| 4: Supprimer contact               |
+| 5: Trier les contacts              |
+| 6: Trier les contacts par date     |
+| 7: Rechercher les contacts sur nom |
+|                                    |
+|          Press q to leave          |
+[------------------------------------]
