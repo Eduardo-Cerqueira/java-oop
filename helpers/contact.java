@@ -16,20 +16,20 @@ public class contact {
     private String name;
     
     public String getName() {
-        return name.toUpperCase();
+        return name;
     }
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toUpperCase();
     }
     
     // Surname (Family name)
     private String surname;
 
     public String getSurname() {
-        return surname.substring(0,1).toUpperCase() + surname.substring(1);
+        return surname;
     }
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.surname = surname.substring(0,1).toUpperCase() + surname.substring(1);
     }
 
      // Phone Number
@@ -71,8 +71,25 @@ public class contact {
         return birth_date;
     }
     public void setBirth_date(String birth_date) throws ParseException {
-        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
-        this.birth_date = dateformat.parse(birth_date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        this.birth_date = dateFormat.parse(birth_date);
+    }
+
+    public static final String spliter = ";";
+
+    public String toString() {
+        StringBuilder construct = new StringBuilder();
+        construct.append(getName());
+        construct.append(spliter);
+        construct.append(getSurname());
+        construct.append(spliter);
+        construct.append(getEmail());
+        construct.append(spliter);
+        construct.append(getPhone_num());
+        construct.append(spliter);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        construct.append(dateFormat.format(getBirth_date()));
+        return construct.toString();
     }
 
     public void save() throws IOException {
