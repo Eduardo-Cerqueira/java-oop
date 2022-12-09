@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class contact {
+public class contact implements Comparable<contact> {
     // Name
     private String name;
     
@@ -94,9 +94,9 @@ public class contact {
 
     public void save() throws IOException {
         try {
-            FileWriter writer = new FileWriter("contacts.csv", true);
-            writer.write(this.toString());
-            writer.close();
+            FileWriter file = new FileWriter("contacts.csv", true);
+            file.write(this.toString()+"\n");
+            file.close();
         } catch (IOException error) {
             error.printStackTrace();
         }
@@ -112,5 +112,12 @@ public class contact {
         } finally {
             pw.close();
         }
+    }
+    @Override
+    public int compareTo(contact c) {
+        if (this.getName().equals(c.getName())) {
+            return this.getSurname().compareTo(c.getSurname());
+        }
+        return this.getName().compareTo(c.getName());
     }
 }

@@ -1,9 +1,6 @@
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import helpers.contact;
 import helpers.manageContacts;
 
 public class Main {
@@ -18,7 +15,7 @@ public class Main {
             String choise = scan.nextLine();
             switch (choise) {
                 case "1":
-                    addContact();
+                    manageContacts.addContact();
                     break;
                 case "2":
                     manageContacts.showAllContacts();
@@ -28,6 +25,15 @@ public class Main {
                     break;
                 case "4":
                     manageContacts.deleteContact();
+                    break;
+                case "5":
+                    manageContacts.sortContacts();
+                    break;
+                case "6":
+                    manageContacts.sortByDate();
+                    break;
+                case "7":
+                    break;
                 case "a":
                     scan.close();
                     return;
@@ -77,51 +83,5 @@ public class Main {
         for (String s : menus) {
             System.out.println(s);
         }
-    }
-
-    private static void addContact() {
-        contact c = new contact();
-        System.out.println("Saisir le nom :");
-        c.setName(scan.nextLine());
-        System.out.println("Saisir le prénom :");
-        c.setSurname(scan.nextLine());
-
-        do {
-            try {
-                System.out.println("Saisir le numéro de téléphone :");
-                c.setPhone_num(scan.nextLine());
-                break;
-            } catch (ParseException error) {
-                System.out.println(error.getMessage());
-            }
-        } while (true);
-
-        do {
-            try {
-                System.out.println("Saisir l'email :");
-                c.setEmail(scan.nextLine());
-                break;
-            } catch (ParseException error) {
-                System.out.println(error.getMessage());
-            }
-        } while (true);
-
-        do {
-            try {
-                System.out.println("Saisir la date de naissance:");
-                c.setBirth_date(scan.nextLine());
-                break;
-            } catch (ParseException error) {
-                System.out.println("Error, try again!");
-            }
-        } while (true);
-
-        try {
-            c.save();
-            System.out.println("Contact saved !");
-        } catch (IOException error) {
-            System.out.println("Error during saving ...");
-        }
-
     }
 }

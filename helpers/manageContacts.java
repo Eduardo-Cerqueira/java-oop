@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -57,7 +59,7 @@ public class manageContacts {
 
     }
 
-    private static ArrayList<contact> allContacts() throws IOException {
+    public static ArrayList<contact> allContacts() throws IOException {
         String spliter = ";";
         ArrayList<contact> list = new ArrayList<>();
         BufferedReader buffer = new BufferedReader(new FileReader("contacts.csv"));
@@ -83,6 +85,7 @@ public class manageContacts {
         }
         return list;
     }
+
     public static void showAllContacts() {
         try {
             ArrayList<contact> liste = allContacts();
@@ -173,6 +176,42 @@ public class manageContacts {
                 System.out.println("Contact given to delete not found ...");
             }
         } catch (IOException error) {
+            error.printStackTrace();
+        }
+    }
+    
+    //More info : https://www.geeksforgeeks.org/collections-sort-java-examples/
+    public static void sortContacts() {
+        try {
+            ArrayList<contact> list = allContacts();
+            Collections.sort(list, null);
+            for (contact c : list) {
+                System.out.println(c.toString());
+            }
+            /* 
+            Collections.sort(list, null);
+
+            Arrays.sort(strarray, Collections.sort(null);));
+            Arrays.toString(strarray)
+            for (contact c : list) {
+                System.out.println(c.toString());
+            }*/
+        } catch (IOException error) {
+            error.printStackTrace();
+        } 
+    }
+
+    // More info : https://www.geeksforgeeks.org/java-program-to-sort-objects-in-arraylist-by-date/
+    public static void sortByDate() {
+        ArrayList<contact> listDate;
+        try {
+            listDate = allContacts();
+            Collections.sort(listDate, new sortDate());
+        
+            for (contact c : listDate) {
+                System.out.println(c.toString());
+                }
+            } catch (IOException error) {
             error.printStackTrace();
         }
     }
